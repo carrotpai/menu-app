@@ -3,12 +3,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import { authSlice } from './entities/auth/authSlice';
 import { filialApi } from './entities/filial/filialApi';
 import { menuApi } from './entities/menu/menuApi';
+import { filialSlice } from './entities/filial/filialSlice';
 
 export const store = configureStore({
   reducer: {
     auth: authSlice.reducer,
     [filialApi.reducerPath]: filialApi.reducer,
     [menuApi.reducerPath]: menuApi.reducer,
+    filial: filialSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(filialApi.middleware).concat(menuApi.middleware),

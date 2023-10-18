@@ -1,10 +1,17 @@
 module.exports = {
   root: true,
   plugins: ['@typescript-eslint', 'simple-import-sort'],
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ['./tsconfig.json', './tsconfig.node.json'],
+    tsconfigRootDir: __dirname,
+   },
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
-    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-type-checked',
     'plugin:prettier/recommended',
     'prettier',
   ],
