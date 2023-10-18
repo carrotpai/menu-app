@@ -1,12 +1,16 @@
-import React from 'react';
 import { Outlet } from 'react-router';
+import styled from 'styled-components';
+
+const MainLayout = styled.div`
+  width: 100vw;
+`;
 
 function MainPageLayout() {
   return (
-    <div>
+    <MainLayout>
       <p>MainPageLayout</p>
       <Outlet />
-    </div>
+    </MainLayout>
   );
 }
 

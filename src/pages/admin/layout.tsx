@@ -1,16 +1,25 @@
 import { Outlet } from 'react-router';
+import styled from 'styled-components';
 import SideBar from '@/components/sideBar/sideBar';
 
-import styles from './layout.module.scss';
+const Layout = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  height: 800px;
+`;
+
+const Content = styled.div`
+  width: 100%;
+`;
 
 function AdminPageLayout() {
   return (
-    <div className={styles.layout}>
+    <Layout>
       <SideBar />
-      <div>
+      <Content>
         <Outlet />
-      </div>
-    </div>
+      </Content>
+    </Layout>
   );
 }
 

@@ -55,6 +55,7 @@ module.exports = {
         },
       },
     ],
+    'import/no-named-as-default': 'off',
     'import/no-duplicates': 'error',
     '@typescript-eslint/no-use-before-define': 0,
     '@typescript-eslint/no-explicit-any': 0,

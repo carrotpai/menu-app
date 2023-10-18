@@ -1,3 +1,5 @@
+import { shallowEqual } from 'react-redux';
+import { AsideBar } from './ui';
 import { Select } from '@/shared/components';
 import { useGetAllFilialsQuery } from '@/store/entities/filial/filialApi';
 import { setCurrentFilial } from '@/store/entities/filial/filialSlice';
@@ -5,19 +7,22 @@ import { useAppDispatch, useAppSelector } from '@/store/store';
 
 function SideBar() {
   const appDispatch = useAppDispatch();
-  const currentFilial = useAppSelector((state) => ({
-    value: state.filial.currentFilial?.id,
-    label: state.filial.currentFilial?.name,
-  }));
+  const currentFilial = useAppSelector(
+    (state) => ({
+      value: state.filial.currentFilial?.id,
+      label: state.filial.currentFilial?.name,
+    }),
+    shallowEqual
+  );
 
-  const { data, isLoading } = useGetAllFilialsQuery();
+  const { data } = useGetAllFilialsQuery();
   const filials = data?.map((item) => ({
     value: item.id,
     label: item.name,
   }));
 
   return (
-    <aside>
+    <AsideBar>
       <Select
         options={filials}
         value={currentFilial}
@@ -26,7 +31,7 @@ function SideBar() {
         }
         labelText="Филиалы"
       />
-    </aside>
+    </AsideBar>
   );
 }
 

@@ -1,5 +1,10 @@
+import styled from 'styled-components';
+import DeleteIcon from '@/assets/delete.svg';
+import GraphIcon from '@/assets/graph.svg';
+import PencilIcon from '@/assets/pencil.svg';
+import { IconButton } from '@/shared/components';
 import { FilialType } from '@/types/filialTypes';
-import React from 'react';
+import { device } from '@/utils/media/devices';
 
 interface MenuTableItemProps {
   menuType?: string;
@@ -11,7 +16,24 @@ interface MenuTableItemProps {
   exportType?: string;
 }
 
-function TableItem({
+const Cell = styled.td`
+  font-size: 16px;
+  padding-top: 24px;
+  @media ${device.md} {
+    font-size: 18px;
+  }
+  @media ${device.lg} {
+    font-size: 20px;
+  }
+`;
+
+const InteractiveButtons = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 8px;
+`;
+
+export function TableItem({
   menuType = 'test menu type',
   filial,
   tt,
@@ -20,13 +42,18 @@ function TableItem({
 }: MenuTableItemProps) {
   return (
     <tr>
-      <td>{menuType}</td>
-      <td>{filial.name}</td>
-      <td>{tt.name}</td>
-      <td>{isActive ? 'Активно' : 'Не активно'}</td>
-      <td>{exportType}</td>
+      <Cell>{menuType}</Cell>
+      <Cell>{filial.name}</Cell>
+      <Cell>{tt.name}</Cell>
+      <Cell>{isActive ? 'Активно' : 'Не активно'}</Cell>
+      <Cell>{exportType}</Cell>
+      <Cell>
+        <InteractiveButtons>
+          <IconButton icon={<GraphIcon />} onClick={() => console.log('go to graphs')} />
+          <IconButton icon={<PencilIcon />} onClick={() => console.log('update menu item')} />
+          <IconButton icon={<DeleteIcon />} onClick={() => console.log('delete menu item')} />
+        </InteractiveButtons>
+      </Cell>
     </tr>
   );
 }
-
-export default TableItem;

@@ -16,8 +16,10 @@ type TypedBaseQuery = BaseQueryFn<
   FetchBaseQueryMeta
 >;
 
+const sleep = (time: number) => new Promise((res, _) => setTimeout(res, time));
+
 export const staggeredBaseQuery = retry<TypedBaseQuery>(
-  fetchBaseQuery({ baseUrl: import.meta.env.VITE_API_URL }),
+  fetchBaseQuery({ baseUrl: import.meta.env.VITE_API_URL as string }),
   {
     maxRetries: 2,
   }
@@ -28,6 +30,9 @@ export const baseQueryWithZodValidation: (baseQuery: TypedBaseQuery) => TypedBas
     const returnValue = await baseQuery(args, api, extraOptions);
     const zodSchema = extraOptions?.dataSchema;
     const { data } = returnValue;
+
+    //для визуальных тестов лоадера
+    await sleep(5000);
 
     if (data && zodSchema) {
       // eslint-disable-next-line no-useless-catch

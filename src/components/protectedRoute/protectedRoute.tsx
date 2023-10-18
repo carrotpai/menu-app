@@ -1,3 +1,4 @@
+import { shallowEqual } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router';
 import { useAppSelector } from '@/store/store';
 import { Roles } from '@/types/rolesTypes';
@@ -13,7 +14,7 @@ function ProtectedRoute({ forRoles }: ProtectedRouteProps) {
       role: state.auth.role,
       isAuthorized: state.auth.isAuthorized,
     }),
-    (a, b) => a.isAuthorized === b.isAuthorized && a.role === b.role
+    shallowEqual
   );
 
   if (!isAuthorized) {

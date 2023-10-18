@@ -1,4 +1,5 @@
 import { default as ReactSelect } from 'react-select';
+import { SelectLabel } from './ui';
 
 interface SelectProps {
   labelText?: string;
@@ -11,7 +12,7 @@ interface SelectProps {
 function Select({ labelText, options, value, onChange }: SelectProps) {
   return (
     <>
-      <label>{labelText}</label>
+      <SelectLabel>{labelText}</SelectLabel>
       <ReactSelect
         defaultValue={value}
         onChange={

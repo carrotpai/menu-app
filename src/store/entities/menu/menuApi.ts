@@ -16,6 +16,7 @@ function createGetMenuURLSearchParams(
   const searchParams = new URLSearchParams();
   Object.keys(queryParams).forEach((param) => {
     if (queryParams[param]) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       searchParams.append(param, queryParams[param]);
     }
   });
@@ -34,7 +35,7 @@ export const menuApi = createApi({
         return `filial/${filial_id}/menu/${queryParamsString}`;
       },
       extraOptions: { dataSchema: GetMenuScheme },
-      providesTags: [{ type: 'menu', id: 'PARTIAL-LIST' }],
+      providesTags: (_, error, args) => [{ type: 'menu', id: args.filial_id }],
     }),
   }),
 });

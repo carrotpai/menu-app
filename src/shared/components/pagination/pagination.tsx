@@ -1,14 +1,17 @@
+import { PageItem, PageItemsWrapper, PaginationWrapper } from './ui';
 import IconButton from '../iconButton/iconButton';
+import ArrowIcon from '@/assets/arrow.svg';
 
 interface PaginationProps {
   currentPage: number;
   lastPage: number;
+  onPageClick?: (pageNumber: number) => void;
 }
 
-function Pagination({ currentPage, lastPage }: PaginationProps) {
+function Pagination({ currentPage, lastPage, onPageClick }: PaginationProps) {
   const getDisplayedPages = () => {
     const vals = [currentPage - 1, currentPage, currentPage + 1].filter(
-      (item) => item >= 0 && item <= lastPage
+      (item) => item > 0 && item <= lastPage
     );
 
     const result: (number | string)[] = Array.from(vals);
@@ -18,11 +21,11 @@ function Pagination({ currentPage, lastPage }: PaginationProps) {
       result.unshift('...');
     }
 
-    if (vals[2] === lastPage) {
+    if (vals[vals.length - 1] === lastPage) {
       return result;
     }
 
-    if (vals[2] < lastPage) {
+    if (vals[vals.length - 1] < lastPage) {
       result.push('...');
     }
 
@@ -34,15 +37,27 @@ function Pagination({ currentPage, lastPage }: PaginationProps) {
   const pageNumbers = getDisplayedPages();
 
   return (
-    <div>
-      <IconButton />
-      <div>
+    <PaginationWrapper>
+      <IconButton icon={<ArrowIcon />} rotate="180deg" />
+      <PageItemsWrapper>
         {pageNumbers.map((pageNumber, ind) => (
-          <span key={`pag-page-${ind}`}>{pageNumber}</span>
+          <PageItem
+            isActive={ind === currentPage - 1}
+            isDots={pageNumber === '...'}
+            key={`pag-page-${ind}`}
+            //нужно сделать кастомный typeguard
+            onClick={
+              pageNumber !== '...' && onPageClick
+                ? () => onPageClick(pageNumber as number)
+                : undefined
+            }
+          >
+            {pageNumber}
+          </PageItem>
         ))}
-      </div>
-      <IconButton />
-    </div>
+      </PageItemsWrapper>
+      <IconButton icon={<ArrowIcon />} />
+    </PaginationWrapper>
   );
 }
 
