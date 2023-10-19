@@ -19,17 +19,14 @@ interface MenuTableItemProps {
 const Cell = styled.td`
   font-size: 16px;
   padding-top: 24px;
-  &:nth-child(5) {
-    padding-right: 24px;
-  }
 
   @media ${device.xl} {
     font-size: 20px;
   }
 
   @media ${device['2xl']} {
-    &:nth-child(5) {
-      padding-right: 0;
+    &:last-child {
+      padding-right: 64px;
     }
   }
 `;
@@ -37,7 +34,10 @@ const Cell = styled.td`
 const InteractiveButtons = styled.div`
   display: flex;
   flex-flow: row nowrap;
-  gap: 8px;
+  gap: 4px;
+  @media ${device.xl} {
+    gap: 8px;
+  }
 `;
 
 export function TableItem({

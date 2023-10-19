@@ -36,7 +36,7 @@ function SideBar() {
           }
           labelText="Филиалы"
         />
-        <Divider style={{ marginTop: '16px' }} />
+        <Divider style={{ marginTop: '12px' }} width="2px" />
         <NavBar />
       </BarContainer>
     </AsideBar>

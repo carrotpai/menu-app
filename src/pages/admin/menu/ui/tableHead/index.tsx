@@ -10,28 +10,25 @@ const HeadCell = styled.th`
   font-weight: 400;
   width: 20%;
   &:last-child {
-    width: auto;
     white-space: nowrap;
-    @media ${device['2xl']} {
-      width: 100%;
-    }
   }
 
   &:nth-child(4) {
-    width: 25%;
+    width: 21%;
     @media ${device['2xl']} {
-      width: 20%;
+      width: 17%;
     }
   }
 
   @media ${device.xl} {
-    padding-right: 48px;
+    padding-right: 32px;
     font-size: 16px;
   }
 
   @media ${device['2xl']} {
+    padding-right: 44px;
     font-size: 18px;
-    width: 18%;
+    width: 20%;
   }
 `;
 
@@ -70,15 +67,18 @@ export function TableHead() {
               placeholder(base, props) {
                 return {
                   ...base,
-                  fontSize: '18px',
+                  fontSize: '14px',
                   fontWeight: 400,
+                  '@media (min-width: 1280px)': {
+                    fontSize: '18px',
+                  },
                 };
               },
             }}
             options={statusOptions}
           />
         </HeadCell>
-        <HeadCell colSpan={2}>Экспорт</HeadCell>
+        <HeadCell>Экспорт</HeadCell>
       </Row>
     </thead>
   );

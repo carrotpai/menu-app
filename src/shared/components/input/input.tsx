@@ -30,11 +30,12 @@ const Input = styled(CustomInput)`
 
   @media ${device.xl} {
     font-size: 16px;
-    height: 35px;
+    height: 32px;
   }
 
   @media ${device['2xl']} {
     font-size: 18px;
+    height: 35px;
   }
 `;
 
