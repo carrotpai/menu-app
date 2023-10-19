@@ -1,5 +1,11 @@
+import { Link } from 'react-router-dom';
+
 function AdminPage() {
-  return <div>AdminPage</div>;
+  return (
+    <div>
+      <Link to={'menu'}>To Menu!</Link>
+    </div>
+  );
 }
 
 export default AdminPage;
