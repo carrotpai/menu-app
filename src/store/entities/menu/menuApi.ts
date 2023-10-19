@@ -1,6 +1,5 @@
-import { createApi } from '@reduxjs/toolkit/query/react';
 import { GetMenuResponseType, GetMenuScheme } from './lib/menu.zod';
-import { baseQueryWithZodValidation, staggeredBaseQuery } from '@/store/baseQuery/apiBaseQueries';
+import { rootApi } from '@/store/store';
 
 type getMenuQueryArgs = {
   filial_id: number;
@@ -23,16 +22,13 @@ function createGetMenuURLSearchParams(
   return searchParams.toString();
 }
 
-export const menuApi = createApi({
-  reducerPath: 'menuApi',
-  baseQuery: baseQueryWithZodValidation(staggeredBaseQuery),
-  tagTypes: ['menu'],
+export const menuApi = rootApi.injectEndpoints({
   endpoints: (build) => ({
     getMenu: build.query<GetMenuResponseType, getMenuQueryArgs>({
       query: (args) => {
         const { filial_id, ...queryParams } = args;
         const queryParamsString = createGetMenuURLSearchParams(queryParams);
-        return `filial/${filial_id}/menu/${queryParamsString}`;
+        return `filial/${filial_id}/menu/?${queryParamsString}`;
       },
       extraOptions: { dataSchema: GetMenuScheme },
       providesTags: (_, error, args) => [{ type: 'menu', id: args.filial_id }],

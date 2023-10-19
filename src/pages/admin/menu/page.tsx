@@ -1,9 +1,11 @@
 import Skeleton from 'react-loading-skeleton';
+import { shallowEqual } from 'react-redux';
 import styled from 'styled-components';
 import { MenuContent, MenuFooter, MenuTable, TableHead, TableItem } from './ui';
 import { Button, Pagination, QueryStatusMessage } from '@/shared/components';
 import { useGetMenuQuery } from '@/store/entities/menu/menuApi';
-import { useAppSelector } from '@/store/store';
+import { setPage } from '@/store/entities/menu/menuSlice';
+import { useAppDispatch, useAppSelector } from '@/store/store';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 const InteractiveButtons = styled.div`
@@ -25,12 +27,21 @@ function MenuPage() {
     (state) => state.filial.currentFilial,
     (a, b) => a?.id === b?.id
   );
+  const queryParams = useAppSelector(
+    (state) => ({ page: state.menu.page, limit: state.menu.limit }),
+    shallowEqual
+  );
+  const appDispatch = useAppDispatch();
+
   const {
     data: menuResponse,
     isFetching,
     isError,
-  } = useGetMenuQuery({ filial_id: currentFilial?.id ?? 0 }, { skip: !currentFilial });
-  const currentPage = 2;
+  } = useGetMenuQuery(
+    { filial_id: currentFilial?.id ?? 0, page: queryParams.page, limit: queryParams.limit },
+    { skip: !currentFilial }
+  );
+  const currentPage = queryParams.page ?? 1;
 
   const isNeedMessage = !menuResponse || isFetching || isError;
 
@@ -84,7 +95,23 @@ function MenuPage() {
         </tbody>
       </MenuTable>
       <MenuFooter>
-        <Pagination key={`pag-${currentPage}`} lastPage={3} currentPage={1} />
+        <Pagination
+          onPageClick={(pageNumber) => appDispatch(setPage(pageNumber))}
+          onNextPageClick={() => {
+            if (currentPage !== 3 /** max-pages*/) {
+              appDispatch(setPage(currentPage + 1));
+            }
+          }}
+          onPrevPageClick={() => {
+            if (currentPage !== 0) {
+              appDispatch(setPage(currentPage - 1));
+            }
+          }}
+          key={`pag-${currentPage}`}
+          /**3 - для тестирования (тест данные только 1 страница) */
+          lastPage={3 /* menuResponse?.max_pages ?? 0 */}
+          currentPage={currentPage}
+        />
         <InteractiveButtons>
           <Button>Добавить меню</Button>
           <Button>Импорт</Button>

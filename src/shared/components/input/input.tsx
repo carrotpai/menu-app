@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { device } from '@/utils/media/devices';
 
 interface InputProps {
   className?: string;
@@ -6,11 +7,12 @@ interface InputProps {
 }
 
 const Input = styled(CustomInput)`
+  width: 100%;
   border-radius: 4px;
-  font-size: 18px;
+  font-size: 14px;
   font-family: inherit;
   font-weight: 400;
-  height: 36px;
+  height: 32px;
   padding: 2px 8px;
   border: 1px solid #cccccc;
 
@@ -24,6 +26,15 @@ const Input = styled(CustomInput)`
 
   &::placeholder {
     font: inherit;
+  }
+
+  @media ${device.xl} {
+    font-size: 16px;
+    height: 35px;
+  }
+
+  @media ${device['2xl']} {
+    font-size: 18px;
   }
 `;
 

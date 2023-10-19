@@ -1,6 +1,8 @@
 import { shallowEqual } from 'react-redux';
-import { AsideBar } from './ui';
-import { Select } from '@/shared/components';
+import { AsideBar, BarContainer } from './ui';
+import InfoCard from '../infoCard/infoCard';
+import NavBar from '../navBar/navBar';
+import { Divider, Select } from '@/shared/components';
 import { useGetAllFilialsQuery } from '@/store/entities/filial/filialApi';
 import { setCurrentFilial } from '@/store/entities/filial/filialSlice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
@@ -15,7 +17,7 @@ function SideBar() {
     shallowEqual
   );
 
-  const { data } = useGetAllFilialsQuery();
+  const { data, isLoading } = useGetAllFilialsQuery();
   const filials = data?.map((item) => ({
     value: item.id,
     label: item.name,
@@ -23,14 +25,20 @@ function SideBar() {
 
   return (
     <AsideBar>
-      <Select
-        options={filials}
-        value={currentFilial}
-        onChange={(newValue) =>
-          appDispatch(setCurrentFilial({ id: newValue.value, name: newValue.label }))
-        }
-        labelText="Филиалы"
-      />
+      <InfoCard />
+      <BarContainer>
+        <Select
+          isLoading={isLoading}
+          options={filials}
+          value={currentFilial}
+          onChange={(newValue) =>
+            appDispatch(setCurrentFilial({ id: newValue.value, name: newValue.label }))
+          }
+          labelText="Филиалы"
+        />
+        <Divider style={{ marginTop: '16px' }} />
+        <NavBar />
+      </BarContainer>
     </AsideBar>
   );
 }

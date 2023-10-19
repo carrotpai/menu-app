@@ -15,7 +15,6 @@ interface ButtonProps {
 
 const ButtonAttrs = (props: ButtonProps) => ({
   color: props.color || '#ffffff',
-  backgroundColor: props.backgroundColor || '#0C356A',
   fontSize: props.fontSize || '16px',
   borderRadius: props.borderRadius || '8px',
   padding: props.padding || '12px 32px',
@@ -30,7 +29,7 @@ const Button = styled(CustomButton).attrs(ButtonAttrs)`
   height: fit-content;
   font-size: ${(props) => props.fontSize};
   padding: ${(props) => props.padding};
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${(props) => props.backgroundColor || props.theme.colors.main};
   color: ${(props) => props.color};
   border-radius: ${(props) => props.borderRadius};
 

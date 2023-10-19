@@ -1,4 +1,5 @@
-import { PageItem, PageItemsWrapper, PaginationWrapper } from './ui';
+import { PageItem } from './ui';
+import Container from '../container/container';
 import IconButton from '../iconButton/iconButton';
 import ArrowIcon from '@/assets/arrow.svg';
 
@@ -6,30 +7,35 @@ interface PaginationProps {
   currentPage: number;
   lastPage: number;
   onPageClick?: (pageNumber: number) => void;
+  onPrevPageClick?: () => void;
+  onNextPageClick?: () => void;
 }
 
-function Pagination({ currentPage, lastPage, onPageClick }: PaginationProps) {
+function Pagination({
+  currentPage,
+  lastPage,
+  onPageClick,
+  onPrevPageClick,
+  onNextPageClick,
+}: PaginationProps) {
   const getDisplayedPages = () => {
-    const vals = [currentPage - 1, currentPage, currentPage + 1].filter(
-      (item) => item > 0 && item <= lastPage
-    );
+    const setVals = new Set([1, currentPage - 1, currentPage, currentPage + 1, lastPage]);
+    const vals = Array.from(setVals)
+      .filter((item) => item > 0 && item <= lastPage)
+      .sort();
 
-    const result: (number | string)[] = Array.from(vals);
+    const result: (number | string)[] = [1];
 
-    //номера страниц по определению отсортированы
-    if (vals[0] > 1) {
-      result.unshift('...');
+    for (let i = 1; i < vals.length; i++) {
+      if (i === vals.length) {
+        result.push(vals[i]);
+        break;
+      }
+      if (vals[i] - vals[i - 1] > 1) {
+        result.push('...');
+      }
+      result.push(vals[i]);
     }
-
-    if (vals[vals.length - 1] === lastPage) {
-      return result;
-    }
-
-    if (vals[vals.length - 1] < lastPage) {
-      result.push('...');
-    }
-
-    result.push(lastPage);
 
     return result;
   };
@@ -37,12 +43,12 @@ function Pagination({ currentPage, lastPage, onPageClick }: PaginationProps) {
   const pageNumbers = getDisplayedPages();
 
   return (
-    <PaginationWrapper>
-      <IconButton icon={<ArrowIcon />} rotate="180deg" />
-      <PageItemsWrapper>
+    <Container display="flex" gap="16px" direction="row" alignItems="center">
+      <IconButton onClick={onPrevPageClick} icon={<ArrowIcon />} rotate="180deg" />
+      <Container display="flex" gap="8px" direction="row" alignItems="center">
         {pageNumbers.map((pageNumber, ind) => (
           <PageItem
-            isActive={ind === currentPage - 1}
+            isActive={pageNumber === currentPage}
             isDots={pageNumber === '...'}
             key={`pag-page-${ind}`}
             //нужно сделать кастомный typeguard
@@ -55,9 +61,9 @@ function Pagination({ currentPage, lastPage, onPageClick }: PaginationProps) {
             {pageNumber}
           </PageItem>
         ))}
-      </PageItemsWrapper>
-      <IconButton icon={<ArrowIcon />} />
-    </PaginationWrapper>
+      </Container>
+      <IconButton onClick={onNextPageClick} icon={<ArrowIcon />} />
+    </Container>
   );
 }
 

@@ -19,11 +19,18 @@ interface MenuTableItemProps {
 const Cell = styled.td`
   font-size: 16px;
   padding-top: 24px;
-  @media ${device.md} {
-    font-size: 18px;
+  &:nth-child(5) {
+    padding-right: 24px;
   }
-  @media ${device.lg} {
+
+  @media ${device.xl} {
     font-size: 20px;
+  }
+
+  @media ${device['2xl']} {
+    &:nth-child(5) {
+      padding-right: 0;
+    }
   }
 `;
 

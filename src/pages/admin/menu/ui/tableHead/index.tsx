@@ -1,11 +1,37 @@
 import ReactSelect from 'react-select';
 import styled from 'styled-components';
 import { Input } from '@/shared/components';
+import { device } from '@/utils/media/devices';
 
 const HeadCell = styled.th`
-  padding: 0px 32px 16px 0px;
+  padding-bottom: 16px;
+  padding-right: 24px;
+  font-size: 14px;
+  font-weight: 400;
+  width: 20%;
   &:last-child {
-    width: 100%;
+    width: auto;
+    white-space: nowrap;
+    @media ${device['2xl']} {
+      width: 100%;
+    }
+  }
+
+  &:nth-child(4) {
+    width: 25%;
+    @media ${device['2xl']} {
+      width: 20%;
+    }
+  }
+
+  @media ${device.xl} {
+    padding-right: 48px;
+    font-size: 16px;
+  }
+
+  @media ${device['2xl']} {
+    font-size: 18px;
+    width: 18%;
   }
 `;
 
@@ -38,7 +64,7 @@ export function TableHead() {
               control(base, props) {
                 return {
                   ...base,
-                  width: '180px',
+                  width: '100%',
                 };
               },
               placeholder(base, props) {
@@ -52,15 +78,7 @@ export function TableHead() {
             options={statusOptions}
           />
         </HeadCell>
-        <HeadCell
-          style={{
-            font: 'inherit',
-            fontSize: '18px',
-            fontWeight: 400,
-          }}
-        >
-          Экспорт
-        </HeadCell>
+        <HeadCell colSpan={2}>Экспорт</HeadCell>
       </Row>
     </thead>
   );

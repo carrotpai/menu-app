@@ -7,13 +7,15 @@ interface SelectProps {
   onChange?: (newValue: { value: number; label: string }) => void;
   value?: { value?: number; label?: string };
   options?: Array<{ value: number; label: string }>;
+  isLoading?: boolean;
 }
 
-function Select({ labelText, options, value, onChange }: SelectProps) {
+function Select({ labelText, options, value, onChange, isLoading = false }: SelectProps) {
   return (
     <>
       <SelectLabel>{labelText}</SelectLabel>
       <ReactSelect
+        isLoading={isLoading}
         defaultValue={value}
         onChange={
           onChange

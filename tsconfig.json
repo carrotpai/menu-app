@@ -33,7 +33,7 @@
         "@/*": ["./src/*"],
       }
   },
-  "include": ["src"],
+  "include": ["src", "src/app/theme"],
   "exclude": ["node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

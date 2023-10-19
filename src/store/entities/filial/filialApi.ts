@@ -1,11 +1,7 @@
-import { createApi } from '@reduxjs/toolkit/query/react';
 import { GetAllFilialsResponseSchema, GetFilialsResponseType } from './lib/filial.zod';
-import { baseQueryWithZodValidation, staggeredBaseQuery } from '@/store/baseQuery/apiBaseQueries';
+import { rootApi } from '@/store/store';
 
-export const filialApi = createApi({
-  reducerPath: 'filialApi',
-  baseQuery: baseQueryWithZodValidation(staggeredBaseQuery),
-  tagTypes: ['filials'],
+export const filialApi = rootApi.injectEndpoints({
   endpoints: (build) => ({
     getAllFilials: build.query<GetFilialsResponseType, void>({
       query: () => 'filial/',

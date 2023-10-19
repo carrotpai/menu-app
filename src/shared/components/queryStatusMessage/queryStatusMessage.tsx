@@ -1,31 +1,25 @@
-import styled from 'styled-components';
+import Container from '../container/container';
 import ExclamationMarkIcon from '@/assets/exclamation.svg';
 
 interface QueryStatusMessageProps {
   text: string;
 }
 
-const Wrapper = styled.div`
-  display: flex;
-  gap: 12px;
-  flex-flow: column nowrap;
-  align-items: center;
-  justify-content: center;
-`;
-
-const IconWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
 function QueryStatusMessage({ text }: QueryStatusMessageProps) {
   return (
-    <Wrapper>
-      <IconWrapper>
+    <Container
+      display="flex"
+      gap="12px"
+      direction="column"
+      wrap="nowrap"
+      alignItems="center"
+      justifyContent="center"
+    >
+      <Container display="flex" justifyContent="center">
         <ExclamationMarkIcon />
-      </IconWrapper>
+      </Container>
       <p style={{ margin: 0, textAlign: 'center', width: '400px' }}>{text}</p>
-    </Wrapper>
+    </Container>
   );
 }
 

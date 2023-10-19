@@ -1,25 +1,11 @@
 import styled from 'styled-components';
 
-export const PaginationWrapper = styled.div`
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  gap: 16px;
-`;
-
-export const PageItemsWrapper = styled.div`
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  gap: 8px;
-`;
-
 const customSpan = (props: {
   isActive?: boolean;
   isDots?: boolean;
   onClick?: () => void;
   children?: React.ReactNode;
-  className?: string;
+  className?: never;
 }) => {
   return (
     <span

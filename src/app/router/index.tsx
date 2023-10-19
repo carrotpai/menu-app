@@ -4,10 +4,18 @@ import { ProtectedRoute } from '@/components';
 import {
   AdminPage,
   AdminPageLayout,
+  ComponentPage,
+  InventoryPage,
+  InvoicePage,
+  LogisticPage,
   MainPage,
   MainPageLayout,
   MenuPage,
   MenuPageLayout,
+  ProductionPage,
+  ProductsPage,
+  SemimanufacturePage,
+  WriteDownPage,
 } from '@/pages';
 
 export const router = createBrowserRouter([
@@ -45,6 +53,38 @@ export const router = createBrowserRouter([
                   },
                 ],
               },
+              {
+                element: <ComponentPage />,
+                path: paths.admin.components,
+              },
+              {
+                element: <ProductsPage />,
+                path: paths.admin.products,
+              },
+              {
+                element: <InvoicePage />,
+                path: paths.admin.invoices,
+              },
+              {
+                element: <InventoryPage />,
+                path: paths.admin.inventory,
+              },
+              {
+                element: <LogisticPage />,
+                path: paths.admin.logistic,
+              },
+              {
+                element: <ProductionPage />,
+                path: paths.admin.production,
+              },
+              {
+                element: <SemimanufacturePage />,
+                path: paths.admin.semimanufactures,
+              },
+              {
+                element: <WriteDownPage />,
+                path: paths.admin.writeDowns,
+              },
             ],
           },
         ],
@@ -52,3 +92,5 @@ export const router = createBrowserRouter([
     ],
   },
 ]);
+
+//в лучшем случае подразбить роуты на отдельные файлики
