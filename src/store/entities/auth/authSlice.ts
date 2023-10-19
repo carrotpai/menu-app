@@ -1,5 +1,5 @@
-import { Roles } from '@/types/rolesTypes';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { Roles } from '@/types/rolesTypes';
 
 interface AuthUserData {
   token: string;

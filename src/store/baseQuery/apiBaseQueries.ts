@@ -35,7 +35,6 @@ export const baseQueryWithZodValidation: (baseQuery: TypedBaseQuery) => TypedBas
     await sleep(5000);
 
     if (data && zodSchema) {
-      // eslint-disable-next-line no-useless-catch
       try {
         zodSchema.parse(data);
       } catch (error) {
