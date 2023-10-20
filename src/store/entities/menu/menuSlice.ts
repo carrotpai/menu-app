@@ -4,7 +4,7 @@ import { MenuSearchQueryType } from '@/types/menuTypes';
 interface MenuSliceStateType {
   limit?: number;
   page?: number;
-  active_status?: 'active' | 'inactive';
+  active_status?: 'active' | 'no_active';
   menu_name?: string;
   tt_name?: string;
 }
@@ -16,7 +16,7 @@ export const menuSlice = createSlice({
     setPage: (state, action: PayloadAction<number>) => {
       state.page = action.payload;
     },
-    setActiveStatus: (state, action: PayloadAction<'active' | 'inactive' | undefined>) => {
+    setActiveStatus: (state, action: PayloadAction<'active' | 'no_active' | undefined>) => {
       state.page = 1;
       state.active_status = action.payload;
     },

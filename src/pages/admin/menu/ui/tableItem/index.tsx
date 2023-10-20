@@ -26,13 +26,14 @@ const Cell = styled.td`
 
   @media ${device['2xl']} {
     &:last-child {
-      padding-right: 64px;
+      padding-right: 48px;
     }
   }
 `;
 
 const InteractiveButtons = styled.div`
   display: flex;
+  justify-content: flex-end;
   flex-flow: row nowrap;
   gap: 4px;
   @media ${device.xl} {

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { shallowEqual } from 'react-redux';
 import ReactSelect from 'react-select';
 import styled from 'styled-components';
 import { HeadCell } from './HeadCell';
@@ -13,9 +14,9 @@ const Row = styled.tr`
   border-bottom: 4px solid rgba(82, 109, 130, 0.2);
 `;
 
-const statusOptions: { value: 'active' | 'inactive'; label: string }[] = [
+const statusOptions: { value: 'active' | 'no_active'; label: string }[] = [
   { value: 'active', label: 'активно' },
-  { value: 'inactive', label: 'не активно' },
+  { value: 'no_active', label: 'не активно' },
 ];
 
 export function TableHead() {
@@ -31,7 +32,20 @@ export function TableHead() {
     (state) => state.filial.currentFilial,
     (a, b) => a?.id === b?.id
   );
-  const activeStatus = useAppSelector((state) => state.menu.active_status);
+  const storeQueryVals = useAppSelector(
+    (state) => ({
+      name: state.menu.menu_name,
+      tt: state.menu.tt_name,
+      activeStatus: state.menu.active_status,
+    }),
+    shallowEqual
+  );
+
+  useEffect(() => {
+    if (storeQueryVals.name === '' && storeQueryVals.tt === '' && !storeQueryVals.activeStatus) {
+      setFilterValues((state) => ({ menu_name: '', tt_name: '' }));
+    }
+  }, [storeQueryVals]);
 
   useEffect(() => {
     debouncedDispatch(setFilterQuery(filterValues));
@@ -59,7 +73,7 @@ export function TableHead() {
           />
         </HeadCell>
         <HeadCell>
-          <Input placeholder="Филиал" readOnly value={currentFilial?.name} />
+          <Input placeholder="Филиал" readOnly value={currentFilial?.name ?? ''} />
         </HeadCell>
         <HeadCell>
           <Input
@@ -74,10 +88,13 @@ export function TableHead() {
             name="active_status"
             placeholder="статус..."
             value={
-              activeStatus && {
-                value: activeStatus,
-                label: statusOptions.find((item) => item.value === activeStatus)?.label,
-              }
+              storeQueryVals.activeStatus
+                ? {
+                    value: storeQueryVals.activeStatus,
+                    label: statusOptions.find((item) => item.value === storeQueryVals.activeStatus)
+                      ?.label,
+                  }
+                : null
             }
             onChange={(newValue) => appDispatch(setActiveStatus(newValue?.value))}
             styles={ReactSelectStyles}

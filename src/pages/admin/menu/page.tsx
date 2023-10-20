@@ -22,7 +22,13 @@ function MenuPage() {
     (a, b) => a?.id === b?.id
   );
   const queryParams = useAppSelector(
-    (state) => ({ page: state.menu.page, limit: state.menu.limit }),
+    (state) => ({
+      page: state.menu.page,
+      limit: state.menu.limit,
+      name: state.menu.menu_name,
+      tt: state.menu.tt_name,
+      active: state.menu.active_status,
+    }),
     shallowEqual
   );
   const appDispatch = useAppDispatch();
@@ -32,7 +38,7 @@ function MenuPage() {
     isFetching,
     isError,
   } = useGetMenuQuery(
-    { filial_id: currentFilial?.id ?? 0, page: queryParams.page, limit: queryParams.limit },
+    { filial_id: currentFilial?.id ?? 0, ...queryParams },
     { skip: !currentFilial }
   );
   const currentPage = queryParams.page ?? 1;
@@ -42,7 +48,6 @@ function MenuPage() {
   const getQueryMessage = () => {
     let text = '';
     if (isFetching) {
-      console.log('загрузка');
       return Array(8)
         .fill(0)
         .map((_, ind) => (

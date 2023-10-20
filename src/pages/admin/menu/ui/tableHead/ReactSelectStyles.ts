@@ -2,12 +2,12 @@ import { GroupBase, StylesConfig } from 'react-select';
 
 export const ReactSelectStyles: StylesConfig<
   {
-    value: 'active' | 'inactive';
+    value: 'active' | 'no_active';
     label: string | undefined;
   },
   false,
   GroupBase<{
-    value: 'active' | 'inactive';
+    value: 'active' | 'no_active';
     label: string | undefined;
   }>
 > = {
