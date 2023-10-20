@@ -24,7 +24,7 @@ interface ContainerProps {
 
 const Container = styled(ContainerComponent)`
   display: ${(props) => props.display || 'block'};
-  flex-direction: ${(props) => props.direction || 'auto'};
+  flex-direction: ${(props) => props.direction || 'row'};
   flex-wrap: ${(props) => props.wrap || 'nowrap'};
   justify-content: ${(props) => props.justifyContent || ''};
   align-items: ${(props) => props.alignItems || ''};

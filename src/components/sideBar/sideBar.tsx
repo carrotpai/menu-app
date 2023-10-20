@@ -1,5 +1,6 @@
+import { useEffect } from 'react';
 import { shallowEqual } from 'react-redux';
-import { AsideBar, BarContainer } from './ui';
+import { AsideBar, BarContainer, BlueLine } from './ui';
 import InfoCard from '../infoCard/infoCard';
 import NavBar from '../navBar/navBar';
 import { Divider, Select } from '@/shared/components';
@@ -24,21 +25,28 @@ function SideBar() {
     label: item.name,
   }));
 
+  useEffect(() => {
+    if (data && !isLoading) {
+      appDispatch(setCurrentFilial({ id: data[0].id, name: data[0].name }));
+    }
+  }, [isLoading, data]);
+
   return (
     <AsideBar>
       <InfoCard />
       <BarContainer>
+        <BlueLine />
         <Select
           isLoading={isLoading}
           options={filials}
           value={currentFilial}
           onChange={(newValue) => {
-            appDispatch(setCurrentFilial({ id: newValue.value, name: newValue.label }));
+            appDispatch(setCurrentFilial({ id: +newValue.value, name: newValue.label }));
             appDispatch(resetMenuFilter());
           }}
           labelText="Филиалы"
         />
-        <Divider style={{ marginTop: '12px' }} width="2px" />
+        <Divider style={{ marginTop: '12px' }} width="2px" color="#657A9D" />
         <NavBar />
       </BarContainer>
     </AsideBar>

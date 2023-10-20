@@ -13,7 +13,7 @@ interface MenuTableItemProps {
   //торговая точка
   tt: { id: number; name: string };
   isActive?: boolean;
-  exportType?: string;
+  exportType?: string[];
 }
 
 const Cell = styled.td`
@@ -41,20 +41,33 @@ const InteractiveButtons = styled.div`
   }
 `;
 
+const CellText = styled.p`
+  max-width: 250px;
+  overflow-wrap: break-word;
+`;
+
 export function TableItem({
   menuType = 'test menu type',
   filial,
   tt,
   isActive = false,
-  exportType = 'нет',
+  exportType,
 }: MenuTableItemProps) {
   return (
     <tr>
-      <Cell>{menuType}</Cell>
-      <Cell>{filial.name}</Cell>
-      <Cell>{tt.name}</Cell>
+      <Cell>
+        <CellText>{menuType}</CellText>
+      </Cell>
+      <Cell>
+        <CellText>{filial.name}</CellText>
+      </Cell>
+      <Cell>
+        <CellText>{tt.name}</CellText>
+      </Cell>
       <Cell>{isActive ? 'Активно' : 'Не активно'}</Cell>
-      <Cell>{exportType}</Cell>
+      <Cell>
+        <CellText>{exportType?.length ? exportType.join(', ') : 'нет'}</CellText>
+      </Cell>
       <Cell>
         <InteractiveButtons>
           <IconButton icon={<GraphIcon />} onClick={() => console.log('go to graphs')} />

@@ -1,17 +1,17 @@
 import { useCallback, useEffect, useState } from 'react';
 import { shallowEqual } from 'react-redux';
-import ReactSelect from 'react-select';
 import styled from 'styled-components';
 import { HeadCell } from './HeadCell';
-import { ReactSelectStyles } from './ReactSelectStyles';
-import { Input } from '@/shared/components';
+import { Input, Select } from '@/shared/components';
 import { setActiveStatus, setFilterQuery } from '@/store/entities/menu/menuSlice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { MenuSearchQueryType } from '@/types/menuTypes';
 import { debounce } from '@/utils/debounce';
 
+type ActiveStatus = 'active' | 'no_active' | undefined;
+
 const Row = styled.tr`
-  border-bottom: 4px solid rgba(82, 109, 130, 0.2);
+  border-bottom: 2px solid ${(props) => props.theme.colors.main};
 `;
 
 const statusOptions: { value: 'active' | 'no_active'; label: string }[] = [
@@ -84,7 +84,7 @@ export function TableHead() {
           />
         </HeadCell>
         <HeadCell>
-          <ReactSelect
+          <Select
             name="active_status"
             placeholder="статус..."
             value={
@@ -96,8 +96,7 @@ export function TableHead() {
                   }
                 : null
             }
-            onChange={(newValue) => appDispatch(setActiveStatus(newValue?.value))}
-            styles={ReactSelectStyles}
+            onChange={(newValue) => appDispatch(setActiveStatus(newValue?.value as ActiveStatus))}
             options={statusOptions}
           />
         </HeadCell>
