@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { shallowEqual } from 'react-redux';
-import styled from 'styled-components';
-import { HeadCell } from './HeadCell';
+import { Cell } from '../Cell';
+import { HeadRow } from '../menuContent';
 import { Input, Select } from '@/shared/components';
 import { setActiveStatus, setFilterQuery } from '@/store/entities/menu/menuSlice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
@@ -9,10 +9,6 @@ import { MenuSearchQueryType } from '@/types/menuTypes';
 import { debounce } from '@/utils/debounce';
 
 type ActiveStatus = 'active' | 'no_active' | undefined;
-
-const Row = styled.tr`
-  border-bottom: 2px solid ${(props) => props.theme.colors.main};
-`;
 
 const statusOptions: { value: 'active' | 'no_active'; label: string }[] = [
   { value: 'active', label: 'активно' },
@@ -62,47 +58,44 @@ export function TableHead() {
   };
 
   return (
-    <thead>
-      <Row>
-        <HeadCell>
-          <Input
-            placeholder="Название меню"
-            name="menu_name"
-            value={filterValues.menu_name}
-            onChange={onChangeFilterInput}
-          />
-        </HeadCell>
-        <HeadCell>
-          <Input placeholder="Филиал" readOnly value={currentFilial?.name ?? ''} />
-        </HeadCell>
-        <HeadCell>
-          <Input
-            placeholder="Торговая точка"
-            name="tt_name"
-            value={filterValues.tt_name}
-            onChange={onChangeFilterInput}
-          />
-        </HeadCell>
-        <HeadCell>
-          <Select
-            name="active_status"
-            placeholder="статус..."
-            value={
-              storeQueryVals.activeStatus
-                ? {
-                    value: storeQueryVals.activeStatus,
-                    label: statusOptions.find((item) => item.value === storeQueryVals.activeStatus)
-                      ?.label,
-                  }
-                : null
-            }
-            onChange={(newValue) => appDispatch(setActiveStatus(newValue?.value as ActiveStatus))}
-            options={statusOptions}
-          />
-        </HeadCell>
-        <HeadCell>Экспорт</HeadCell>
-        <HeadCell />
-      </Row>
-    </thead>
+    <HeadRow>
+      <Cell>
+        <Input
+          placeholder="Название меню"
+          name="menu_name"
+          value={filterValues.menu_name}
+          onChange={onChangeFilterInput}
+        />
+      </Cell>
+      <Cell>
+        <Input placeholder="Филиал" readOnly value={currentFilial?.name ?? ''} />
+      </Cell>
+      <Cell>
+        <Input
+          placeholder="Торговая точка"
+          name="tt_name"
+          value={filterValues.tt_name}
+          onChange={onChangeFilterInput}
+        />
+      </Cell>
+      <Cell>
+        <Select
+          name="active_status"
+          placeholder="статус..."
+          value={
+            storeQueryVals.activeStatus
+              ? {
+                  value: storeQueryVals.activeStatus,
+                  label: statusOptions.find((item) => item.value === storeQueryVals.activeStatus)
+                    ?.label,
+                }
+              : null
+          }
+          onChange={(newValue) => appDispatch(setActiveStatus(newValue?.value as ActiveStatus))}
+          options={statusOptions}
+        />
+      </Cell>
+      <Cell>Экспорт</Cell>
+    </HeadRow>
   );
 }

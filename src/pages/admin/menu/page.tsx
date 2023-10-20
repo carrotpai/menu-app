@@ -8,11 +8,11 @@ import { setPage } from '@/store/entities/menu/menuSlice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import 'react-loading-skeleton/dist/skeleton.css';
 
-const CellMessage = styled.td`
+const CellMessage = styled.div`
   padding: 100px 0;
 `;
 
-const Cell = styled.td`
+const Cell = styled.div`
   padding-top: 24px;
 `;
 
@@ -59,8 +59,8 @@ function MenuPage() {
       return Array(9)
         .fill(0)
         .map((_, ind) => (
-          <tr key={`skeleton-menu-${ind}`}>
-            <Cell colSpan={6}>
+          <Container width="100%" key={`skeleton-menu-${ind}`}>
+            <Cell>
               <Skeleton
                 inline={true}
                 style={{ display: 'inline-block' }}
@@ -68,7 +68,7 @@ function MenuPage() {
                 duration={2}
               />
             </Cell>
-          </tr>
+          </Container>
         ));
     }
 
@@ -85,11 +85,11 @@ function MenuPage() {
     }
 
     return (
-      <tr>
-        <CellMessage colSpan={6}>
+      <Container width="100%" display="flex" justifyContent="center">
+        <CellMessage>
           <QueryStatusMessage text={text} />
         </CellMessage>
-      </tr>
+      </Container>
     );
   };
 
@@ -97,7 +97,7 @@ function MenuPage() {
     <MenuContent>
       <MenuTable>
         <TableHead />
-        <tbody>
+        <div>
           {isNeedMessage
             ? getQueryMessage()
             : menuResponse?.data.map((item, ind) => (
@@ -110,7 +110,7 @@ function MenuPage() {
                   exportType={item.export}
                 />
               ))}
-        </tbody>
+        </div>
       </MenuTable>
       <MenuFooter justifyContent={lastPage !== 1 ? 'space-between' : 'flex-end'}>
         {lastPage !== 1 && (

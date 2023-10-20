@@ -1,8 +1,10 @@
 import styled from 'styled-components';
+import { Cell } from '../Cell';
+import { Row } from '../menuContent';
 import DeleteIcon from '@/assets/delete.svg';
 import GraphIcon from '@/assets/graph.svg';
 import PencilIcon from '@/assets/pencil.svg';
-import { IconButton } from '@/shared/components';
+import { Container, IconButton } from '@/shared/components';
 import { FilialType } from '@/types/filialTypes';
 import { device } from '@/utils/media/devices';
 
@@ -16,22 +18,20 @@ interface MenuTableItemProps {
   exportType?: string[];
 }
 
-const Cell = styled.td`
+const RowCell = styled(Cell)`
   font-size: 16px;
-  padding-top: 24px;
+  padding-bottom: 24px;
 
   @media ${device.xl} {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   @media ${device['2xl']} {
-    &:last-child {
-      padding-right: 48px;
-    }
+    font-size: 20px;
   }
 `;
 
-const InteractiveButtons = styled.div`
+const InteractiveButtons = styled(Container)`
   display: flex;
   justify-content: flex-end;
   flex-flow: row nowrap;
@@ -39,11 +39,13 @@ const InteractiveButtons = styled.div`
   @media ${device.xl} {
     gap: 8px;
   }
+  @media ${device['2xl']} {
+    margin-right: 32px;
+  }
 `;
 
 const CellText = styled.p`
-  max-width: 250px;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
 `;
 
 export function TableItem({
@@ -54,27 +56,25 @@ export function TableItem({
   exportType,
 }: MenuTableItemProps) {
   return (
-    <tr>
-      <Cell>
+    <Row>
+      <RowCell>
         <CellText>{menuType}</CellText>
-      </Cell>
-      <Cell>
+      </RowCell>
+      <RowCell>
         <CellText>{filial.name}</CellText>
-      </Cell>
-      <Cell>
+      </RowCell>
+      <RowCell>
         <CellText>{tt.name}</CellText>
-      </Cell>
-      <Cell>{isActive ? 'Активно' : 'Не активно'}</Cell>
-      <Cell>
+      </RowCell>
+      <RowCell>{isActive ? 'Активно' : 'Не активно'}</RowCell>
+      <RowCell display="flex" direction="row" wrap="nowrap" justifyContent="space-between">
         <CellText>{exportType?.length ? exportType.join(', ') : 'нет'}</CellText>
-      </Cell>
-      <Cell>
         <InteractiveButtons>
           <IconButton icon={<GraphIcon />} onClick={() => console.log('go to graphs')} />
           <IconButton icon={<PencilIcon />} onClick={() => console.log('update menu item')} />
           <IconButton icon={<DeleteIcon />} onClick={() => console.log('delete menu item')} />
         </InteractiveButtons>
-      </Cell>
-    </tr>
+      </RowCell>
+    </Row>
   );
 }
