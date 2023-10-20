@@ -1,9 +1,14 @@
+import React from 'react';
 import styled from 'styled-components';
 import { device } from '@/utils/media/devices';
 
 interface InputProps {
+  readOnly?: boolean;
   className?: string;
   placeholder?: string;
+  name?: string;
+  value?: string | number;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Input = styled(CustomInput)`
@@ -39,8 +44,24 @@ const Input = styled(CustomInput)`
   }
 `;
 
-function CustomInput({ className, placeholder }: InputProps) {
-  return <input className={className} placeholder={placeholder} />;
+function CustomInput({
+  className,
+  placeholder,
+  readOnly = false,
+  name,
+  value,
+  onChange,
+}: InputProps) {
+  return (
+    <input
+      className={className}
+      placeholder={placeholder}
+      readOnly={readOnly}
+      name={name}
+      value={value}
+      onChange={onChange}
+    />
+  );
 }
 
 export default Input;

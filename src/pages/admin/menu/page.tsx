@@ -2,17 +2,11 @@ import Skeleton from 'react-loading-skeleton';
 import { shallowEqual } from 'react-redux';
 import styled from 'styled-components';
 import { MenuContent, MenuFooter, MenuTable, TableHead, TableItem } from './ui';
-import { Button, Pagination, QueryStatusMessage } from '@/shared/components';
+import { Button, Container, Pagination, QueryStatusMessage } from '@/shared/components';
 import { useGetMenuQuery } from '@/store/entities/menu/menuApi';
 import { setPage } from '@/store/entities/menu/menuSlice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import 'react-loading-skeleton/dist/skeleton.css';
-
-const InteractiveButtons = styled.div`
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-`;
 
 const CellMessage = styled.td`
   padding: 100px 0;
@@ -53,7 +47,7 @@ function MenuPage() {
         .fill(0)
         .map((_, ind) => (
           <tr key={`skeleton-menu-${ind}`}>
-            <Cell colSpan={5}>
+            <Cell colSpan={6}>
               <Skeleton
                 inline={true}
                 style={{ display: 'inline-block' }}
@@ -75,7 +69,7 @@ function MenuPage() {
 
     return (
       <tr>
-        <CellMessage colSpan={5}>
+        <CellMessage colSpan={6}>
           <QueryStatusMessage text={text} />
         </CellMessage>
       </tr>
@@ -107,15 +101,15 @@ function MenuPage() {
               appDispatch(setPage(currentPage - 1));
             }
           }}
-          key={`pag-${currentPage}`}
+          key={`pag-${currentPage}-${menuResponse?.max_pages ?? 1}`}
           /**3 - для тестирования (тест данные только 1 страница) */
           lastPage={3 /* menuResponse?.max_pages ?? 0 */}
           currentPage={currentPage}
         />
-        <InteractiveButtons>
+        <Container display="flex" justifyContent="space-between" gap="16px">
           <Button>Добавить меню</Button>
           <Button>Импорт</Button>
-        </InteractiveButtons>
+        </Container>
       </MenuFooter>
     </MenuContent>
   );

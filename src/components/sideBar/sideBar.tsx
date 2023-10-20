@@ -5,6 +5,7 @@ import NavBar from '../navBar/navBar';
 import { Divider, Select } from '@/shared/components';
 import { useGetAllFilialsQuery } from '@/store/entities/filial/filialApi';
 import { setCurrentFilial } from '@/store/entities/filial/filialSlice';
+import { resetMenuFilter } from '@/store/entities/menu/menuSlice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 function SideBar() {
@@ -31,9 +32,10 @@ function SideBar() {
           isLoading={isLoading}
           options={filials}
           value={currentFilial}
-          onChange={(newValue) =>
-            appDispatch(setCurrentFilial({ id: newValue.value, name: newValue.label }))
-          }
+          onChange={(newValue) => {
+            appDispatch(setCurrentFilial({ id: newValue.value, name: newValue.label }));
+            appDispatch(resetMenuFilter());
+          }}
           labelText="Филиалы"
         />
         <Divider style={{ marginTop: '12px' }} width="2px" />

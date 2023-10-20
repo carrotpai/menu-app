@@ -1,10 +1,11 @@
-export function debounce(func: (...args: any[]) => any) {
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+export function debounce(func: (...args: any[]) => any, time: number) {
   let timer: ReturnType<typeof setTimeout>;
 
   function debounced(...args: any[]) {
     clearTimeout(timer);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    timer = setTimeout(() => func(args));
+    timer = setTimeout(() => func(...args), time);
   }
 
   debounced.clear = function () {
