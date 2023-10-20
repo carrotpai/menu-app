@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Container } from '@/shared/components';
 
 export const MenuContent = styled.div`
   width: 100%;
@@ -8,11 +9,10 @@ export const MenuContent = styled.div`
   justify-content: space-between;
 `;
 
-export const MenuFooter = styled.div`
+export const MenuFooter = styled(Container)`
   width: 100%;
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-between;
 `;
 
 export const MenuTable = styled.table`

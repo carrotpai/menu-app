@@ -21,10 +21,10 @@ const StyledLink = styled(NavLink)`
   font-size: 18px;
 
   &.active {
-    box-shadow: 0 2px 6px -2px gray;
+    box-shadow: ${(props) => props.theme.shadow.main};
   }
   &:hover {
-    box-shadow: 0 2px 6px -2px gray;
+    box-shadow: ${(props) => props.theme.shadow.main};
   }
 `;
 

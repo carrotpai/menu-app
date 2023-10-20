@@ -19,7 +19,8 @@ const Input = styled(CustomInput)`
   font-weight: 400;
   height: 32px;
   padding: 2px 8px;
-  border: 1px solid #cccccc;
+  border: 1px solid ${(props) => props.theme.colors.secondary};
+  color: ${(props) => props.theme.colors.main};
 
   &:hover {
     border-color: #b3b3b3;
@@ -31,6 +32,7 @@ const Input = styled(CustomInput)`
 
   &::placeholder {
     font: inherit;
+    color: ${(props) => props.theme.colors.secondary};
   }
 
   @media ${device.xl} {
@@ -40,7 +42,7 @@ const Input = styled(CustomInput)`
 
   @media ${device['2xl']} {
     font-size: 18px;
-    height: 35px;
+    height: 32px;
   }
 `;
 

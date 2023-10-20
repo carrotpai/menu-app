@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { device } from '@/utils/media/devices';
 
 export const SelectLabel = styled.label`
-  color: #8f8f8f;
+  color: ${(props) => props.theme.colors.secondary};
   font-size: 12px;
   @media ${device.sm} {
     font-size: 14px;

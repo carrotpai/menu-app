@@ -5,7 +5,7 @@ import { SideBar } from '@/components';
 const Layout = styled.div`
   display: flex;
   flex-flow: row nowrap;
-  height: 800px;
+  min-height: 800px;
 `;
 
 const Content = styled.div`

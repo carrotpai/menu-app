@@ -41,14 +41,22 @@ function MenuPage() {
     { filial_id: currentFilial?.id ?? 0, ...queryParams },
     { skip: !currentFilial }
   );
-  const currentPage = queryParams.page ?? 1;
 
-  const isNeedMessage = !menuResponse || isFetching || isError;
+  const getLastPage = () => {
+    if (menuResponse) {
+      return 'message' in menuResponse ? 1 : menuResponse.max_pages ?? 1;
+    }
+    return 1;
+  };
+  const currentPage = queryParams.page ?? 1;
+  const lastPage = getLastPage();
+
+  const isNeedMessage = !menuResponse || 'message' in menuResponse || isFetching || isError;
 
   const getQueryMessage = () => {
     let text = '';
     if (isFetching) {
-      return Array(8)
+      return Array(9)
         .fill(0)
         .map((_, ind) => (
           <tr key={`skeleton-menu-${ind}`}>
@@ -66,6 +74,10 @@ function MenuPage() {
 
     if (!menuResponse) {
       text = 'Нет данных';
+    }
+
+    if (menuResponse && 'message' in menuResponse) {
+      text = menuResponse.message;
     }
 
     if (isError) {
@@ -89,28 +101,36 @@ function MenuPage() {
           {isNeedMessage
             ? getQueryMessage()
             : menuResponse?.data.map((item, ind) => (
-                <TableItem key={`menu-item-${ind}`} filial={item.filial} tt={item.tt} />
+                <TableItem
+                  key={`menu-item-${ind}`}
+                  menuType={item.name}
+                  filial={item.filial}
+                  isActive={item.active}
+                  tt={item.tt}
+                  exportType={item.export}
+                />
               ))}
         </tbody>
       </MenuTable>
-      <MenuFooter>
-        <Pagination
-          onPageClick={(pageNumber) => appDispatch(setPage(pageNumber))}
-          onNextPageClick={() => {
-            if (currentPage !== 3 /** max-pages*/) {
-              appDispatch(setPage(currentPage + 1));
-            }
-          }}
-          onPrevPageClick={() => {
-            if (currentPage !== 0) {
-              appDispatch(setPage(currentPage - 1));
-            }
-          }}
-          key={`pag-${currentPage}-${menuResponse?.max_pages ?? 1}`}
-          /**3 - для тестирования (тест данные только 1 страница) */
-          lastPage={3 /* menuResponse?.max_pages ?? 0 */}
-          currentPage={currentPage}
-        />
+      <MenuFooter justifyContent={lastPage !== 1 ? 'space-between' : 'flex-end'}>
+        {lastPage !== 1 && (
+          <Pagination
+            onPageClick={(pageNumber) => appDispatch(setPage(pageNumber))}
+            onNextPageClick={() => {
+              if (currentPage !== lastPage) {
+                appDispatch(setPage(currentPage + 1));
+              }
+            }}
+            onPrevPageClick={() => {
+              if (currentPage !== 0) {
+                appDispatch(setPage(currentPage - 1));
+              }
+            }}
+            key={`pag-${currentPage}-${lastPage}`}
+            lastPage={lastPage}
+            currentPage={currentPage}
+          />
+        )}
         <Container display="flex" justifyContent="space-between" gap="16px">
           <Button>Добавить меню</Button>
           <Button>Импорт</Button>

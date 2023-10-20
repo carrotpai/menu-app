@@ -28,9 +28,10 @@ export const PageItem = styled(customSpan)`
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: ${(props) => (props.isActive ? '0 2px 8px -2px gray' : 'none')};
+  color: ${(props) => props.theme.colors.secondary};
+  box-shadow: ${(props) => (props.isActive ? props.theme.shadow.main : 'none')};
   border-radius: 4px;
   &:hover {
-    box-shadow: ${(props) => (!props.isDots ? '0 2px 8px -2px gray' : 'none')};
+    box-shadow: ${(props) => (!props.isDots ? props.theme.shadow.main : 'none')};
   }
 `;
